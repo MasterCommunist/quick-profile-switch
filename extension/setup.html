@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quick Profile Switch</title>
+  <style>
+    :root { color-scheme: light dark; --accent: #0060df; }
+    body { font: 16px/1.6 system-ui, sans-serif; max-width: 640px; margin: 48px auto; padding: 0 20px; }
+    header { display: flex; align-items: center; gap: 14px; }
+    header img { width: 48px; height: 48px; }
+    h1 { font-size: 24px; margin: 0; }
+    ol { padding-left: 22px; }
+    li { margin: 14px 0; }
+    a { color: var(--accent); }
+    button { font: inherit; padding: 8px 16px; border-radius: 6px; border: 0; background: var(--accent); color: #fff; cursor: pointer; }
+    #status { margin-top: 10px; font-weight: 600; }
+    .ok { color: #058b00; } .missing { color: #c50042; }
+    footer { margin-top: 32px; font-size: 14px; opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icons/icon-96.png" alt="">
+    <h1 data-i18n="setupPageTitle"></h1>
+  </header>
+  <p data-i18n="setupIntro"></p>
+  <ol>
+    <li><span data-i18n="setupStep1"></span><br><a id="download" target="_blank" rel="noopener" data-i18n="setupDownload"></a></li>
+    <li data-i18n="setupStep2"></li>
+    <li><span data-i18n="setupStep3"></span><br><button id="check" data-i18n="setupCheck"></button><div id="status"></div></li>
+  </ol>
+  <footer>
+    <p data-i18n="setupNotes"></p>
+    <p><a id="source" target="_blank" rel="noopener" data-i18n="setupSource"></a></p>
+  </footer>
+  <script src="setup.js"></script>
+</body>
+</html>

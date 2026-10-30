@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "Quick Profile Switch",
+  "version": "2.0.0",
+  "default_locale": "en",
+  "description": "__MSG_extensionDescription__",
+  "homepage_url": "https://github.com/MasterCommunist/quick-profile-switch",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "__MSG_actionTitle__",
+    "default_icon": "icons/toolbar-dark.svg",
+    "theme_icons": [
+      { "light": "icons/toolbar-light.svg", "dark": "icons/toolbar-dark.svg", "size": 16 },
+      { "light": "icons/toolbar-light.svg", "dark": "icons/toolbar-dark.svg", "size": 32 }
+    ]
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": ["nativeMessaging", "menus", "storage", "sessions"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": { "default": "Alt+Shift+P" },
+      "description": "__MSG_commandSwitch__"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{b6ab8238-405a-45f7-8639-3d49e9481d82}",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+dist/
+build/
+work/
+*.spec
+__pycache__/
+private_terms.txt
+error.log
