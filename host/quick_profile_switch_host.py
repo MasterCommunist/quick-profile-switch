@@ -25,7 +25,7 @@ import traceback
 import winreg
 
 APP_NAME = "Quick Profile Switch"
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 HOST_NAME = "quick_profile_switch"
 EXTENSION_ID = "{b6ab8238-405a-45f7-8639-3d49e9481d82}"
 INSTALL_DIR = os.path.join(os.environ["LOCALAPPDATA"], "Programs", "QuickProfileSwitch")
@@ -225,6 +225,15 @@ def firefox_exe(profile):
     raise FileNotFoundError("firefox.exe not found")
 
 
+def firefox_environment():
+    # PyInstaller setzt im eigenen Prozess Variablen, die auf seinen temporären Ordner zeigen. Erbt Firefox sie,
+    # sucht jedes später von diesem Firefox gestartete Hilfsprogramm Python im längst gelöschten Ordner
+    # ("Failed to load Python DLL"). Darum entfernen und zusätzlich PyInstallers Reset-Schalter setzen.
+    env = {k: v for k, v in os.environ.items() if not k.upper().startswith(("_PYI_", "_MEIPASS"))}
+    env["PYINSTALLER_RESET_ENVIRONMENT"] = "1"
+    return env
+
+
 def open_profile(profile):
     exe = firefox_exe(profile)
     args = [exe, "--profile", profile["path"]]
@@ -232,7 +241,7 @@ def open_profile(profile):
     # Arbeitsverzeichnis = Firefox-Ordner; sonst erbt Firefox den Ordner des Hilfsprogramms und sperrt ihn
     # (Deinstallation könnte ihn dann nicht löschen)
     common = dict(stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True,
-                  cwd=os.path.dirname(exe))
+                  cwd=os.path.dirname(exe), env=firefox_environment())
     try:
         # Aus Firefox' Prozessgruppe lösen, damit das neue Fenster nicht mit diesem Programm beendet wird
         subprocess.Popen(args, creationflags=base | subprocess.CREATE_BREAKAWAY_FROM_JOB, **common)
